@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
 import { db } from "../../config/firebase";
@@ -9,7 +9,7 @@ import Loading from "../Loading";
 
 function ChatInput() {
     const { userID } = useAuth();
-    const { setMessages } = useChat();
+    const { messages, setMessages } = useChat();
     const [history, setHistory] = useState([]);
     const collectionRef = collection(db, "history");
     const [userInput, setUserInput] = useState("");
@@ -40,7 +40,7 @@ function ChatInput() {
         };
 
         init();
-    }, []);
+    }, [messages.length]);
 
     const getResponse = async () => {
         setIsResponseLoading(true);
