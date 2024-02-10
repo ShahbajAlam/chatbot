@@ -20,7 +20,7 @@ function ChatHeader() {
             )}
             <img
                 role="button"
-                src="bin.png"
+                src="bin.webp"
                 onClick={handleClearModal}
                 alt="delete conversation button"
                 className="w-[2.5rem] h-[2.5rem] md:w-[3rem] md:h-[3rem]"
@@ -28,7 +28,7 @@ function ChatHeader() {
             <img
                 role="button"
                 onClick={handleLogoutModal}
-                src="log-out.png"
+                src="log-out.webp"
                 alt="logout button"
                 className="w-[2.5rem] h-[2.5rem] md:w-[3rem] md:h-[3rem]"
             />

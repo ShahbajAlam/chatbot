@@ -32,7 +32,7 @@ function SignInWithGithubButton() {
         >
             <Fragment>
                 <img
-                    src="github.png"
+                    src="github.webp"
                     className="w-[1.3rem] aspect-square"
                     alt="Google logo"
                 />

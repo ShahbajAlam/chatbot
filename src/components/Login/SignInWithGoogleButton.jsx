@@ -32,7 +32,7 @@ function SignInWithGoogleButton() {
         >
             <Fragment>
                 <img
-                    src="google.png"
+                    src="google.webp"
                     className="w-[1.3rem] aspect-square"
                     alt="Google logo"
                 />

@@ -11,7 +11,7 @@ function Login() {
             transition={{ duration: 0.4, ease: "easeOut" }}
         >
             <img
-                src="chatbot.png"
+                src="chatbot.webp"
                 alt="chatbot logo"
                 className="w-[3rem] h-[3rem]"
             />

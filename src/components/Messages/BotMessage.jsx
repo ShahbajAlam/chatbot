@@ -12,14 +12,14 @@ function BotMessage({ msg }) {
     return (
         <div className="flex gap-2 mb-3">
             <img
-                src="chatbot.png"
+                src="chatbot.webp"
                 alt="user display picture"
                 className="w-[1.5rem] aspect-square self-start basis-[10%] md:basis-[8%] lg:basis-[5%]"
             />
             <pre className="relative basis-[85%] text-wrap font-['montserrat'] bg-[rgba(0,0,0,0.6)] text-gray-50 flex items-center p-2 pb-8 rounded-lg md:basis-[88%] md:text-xl lg:text-base lg:basis-[90%] lg:pb-12">
                 {msg}
                 <img
-                    src="layer.png"
+                    src="layer.webp"
                     alt="copy button"
                     role="button"
                     onClick={copyResponse}

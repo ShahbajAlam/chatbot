@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import {
+    GoogleGenerativeAI,
+    HarmCategory,
+    HarmBlockThreshold,
+} from "@google/generative-ai";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
 import { db } from "../../config/firebase";
@@ -6,6 +11,29 @@ import { errorToast } from "../../toasts/errorToast";
 import { useAuth } from "../../context/AuthContext";
 import { useChat } from "../../context/ChatContext";
 import Loading from "../Loading";
+
+const safetySettings = [
+    {
+        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+        category: HarmCategory.HARM_CATEGORY_UNSPECIFIED,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+];
 
 function ChatInput() {
     const { userID } = useAuth();
@@ -45,20 +73,15 @@ function ChatInput() {
     const getResponse = async () => {
         setIsResponseLoading(true);
         try {
-            const response = await fetch(
-                "https://chatbot-api-pfz2.onrender.com/chat",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        history,
-                        prompt: userInput,
-                    }),
-                }
-            );
-            const data = await response.json();
+            const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
+            const model = genAI.getGenerativeModel({
+                model: "gemini-pro",
+                safetySettings,
+            });
+            const chat = model.startChat({ history });
+            const response = await chat.sendMessage(userInput);
+            const data = response.response.text();
+
             setMessages((msg) => [...msg, { role: "model", parts: data }]);
             await addDoc(collectionRef, {
                 userID,
